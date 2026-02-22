@@ -1,4 +1,3 @@
-// src/components/SubjectList.js
 import React, { useState } from 'react';
 import { useDrag } from 'react-dnd';
 
@@ -43,22 +42,30 @@ const SubjectList = ({ subjects, onAddToSchedule, onDeleteSubject, onEditSubject
         className="subject-card"
         style={{ 
           opacity: isDragging ? 0.5 : 1,
-          position: 'relative',
           cursor: 'grab'
         }}
       >
-        <div style={{ position: 'absolute', top: '10px', right: '10px', display: 'flex', gap: '5px' }}>
+        <div style={{ 
+          position: 'absolute', 
+          top: '10px', 
+          right: '10px', 
+          display: 'flex', 
+          gap: '8px' 
+        }}>
           <button
             onClick={handleEdit}
             style={{
               background: '#2e7dff',
               color: 'white',
-              border: '2px solid white',
-              width: '30px',
-              height: '30px',
-              fontSize: '1.6rem',
+              border: '3px solid white',
+              width: '40px',
+              height: '40px',
+              fontSize: '2rem',
               fontWeight: 'bold',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
           >✎</button>
           <button
@@ -66,13 +73,15 @@ const SubjectList = ({ subjects, onAddToSchedule, onDeleteSubject, onEditSubject
             style={{
               background: '#ff4d4d',
               color: 'white',
-              border: '2px solid white',
-              width: '30px',
-              height: '30px',
-              fontSize: '1.8rem',
+              border: '3px solid white',
+              width: '40px',
+              height: '40px',
+              fontSize: '2rem',
               fontWeight: 'bold',
               cursor: 'pointer',
-              lineHeight: '1'
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
           >×</button>
         </div>
@@ -90,7 +99,6 @@ const SubjectList = ({ subjects, onAddToSchedule, onDeleteSubject, onEditSubject
     );
   };
 
-  // Edit Modal
   if (editingSubject) {
     return (
       <div className="modal-overlay" onClick={() => setEditingSubject(null)}>

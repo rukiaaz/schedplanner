@@ -1,4 +1,3 @@
-// src/components/SemesterManager.js
 import React, { useState } from 'react';
 
 const SemesterManager = ({ currentSemester, onSelectSemester, onClose }) => {

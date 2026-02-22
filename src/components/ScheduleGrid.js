@@ -1,9 +1,7 @@
-// components/ScheduleGrid.js
 import React from 'react';
 
 const ScheduleGrid = ({ schedule, days, timeSlots, onRemoveItem }) => {
   const handleCellClick = (day, time) => {
-    // This would open a modal to add subject
     console.log('Add subject to', day, time);
   };
 
@@ -19,13 +17,11 @@ const ScheduleGrid = ({ schedule, days, timeSlots, onRemoveItem }) => {
   return (
     <div className="schedule-grid-container">
       <div className="schedule-grid">
-        {/* Header row */}
         <div className="grid-header">TIME</div>
         {days.map(day => (
           <div key={day} className="grid-header">{day}</div>
         ))}
 
-        {/* Time rows */}
         {timeSlots.map(time => (
           <React.Fragment key={time}>
             <div className="time-slot">{time}</div>
@@ -42,10 +38,13 @@ const ScheduleGrid = ({ schedule, days, timeSlots, onRemoveItem }) => {
                       className="schedule-item"
                       style={{ backgroundColor: item.color }}
                     >
-                      <div className="remove-btn" onClick={(e) => {
-                        e.stopPropagation();
-                        onRemoveItem(item.id);
-                      }}>×</div>
+                      <div 
+                        className="remove-btn" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onRemoveItem(item.id);
+                        }}
+                      >×</div>
                       <strong>{item.code}</strong>
                       <div>{item.name}</div>
                     </div>

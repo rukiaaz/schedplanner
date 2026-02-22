@@ -1,4 +1,3 @@
-// src/components/ConflictModal.js
 import React from 'react';
 
 const ConflictModal = ({ conflict, onForceAdd, onCancel }) => {

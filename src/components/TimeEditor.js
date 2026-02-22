@@ -19,7 +19,6 @@ const TimeEditor = ({ days, timeSlots, onSave, onCancel }) => {
 
   const addTimeSlot = () => {
     if (newTime && !editedTimeSlots.includes(newTime)) {
-      // Sort time slots
       const newSlots = [...editedTimeSlots, newTime];
       newSlots.sort((a, b) => {
         const hourA = parseInt(a.split(':')[0]);
@@ -36,11 +35,10 @@ const TimeEditor = ({ days, timeSlots, onSave, onCancel }) => {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content" style={{ maxWidth: '600px' }}>
+    <div className="modal-overlay" onClick={onCancel}>
+      <div className="modal-content" style={{ maxWidth: '600px' }} onClick={(e) => e.stopPropagation()}>
         <h2>⏰ EDIT TIME SLOTS & DAYS</h2>
         
-        {/* DAYS SECTION */}
         <div style={{ marginBottom: '2rem', border: '4px solid black', padding: '1.5rem' }}>
           <h3 style={{ fontSize: '2rem', marginBottom: '1rem' }}>DAYS OF WEEK</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
@@ -104,7 +102,6 @@ const TimeEditor = ({ days, timeSlots, onSave, onCancel }) => {
           </div>
         </div>
 
-        {/* TIME SLOTS SECTION */}
         <div style={{ marginBottom: '2rem', border: '4px solid black', padding: '1.5rem' }}>
           <h3 style={{ fontSize: '2rem', marginBottom: '1rem' }}>TIME SLOTS</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>

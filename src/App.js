@@ -1,4 +1,3 @@
-// App.js - V3 Complete Schedule Planner
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import ScheduleGrid from './components/ScheduleGrid';
@@ -10,7 +9,6 @@ import TimeEditor from './components/TimeEditor';
 import SemesterManager from './components/SemesterManager';
 
 function App() {
-  // State Management
   const [subjects, setSubjects] = useState([]);
   const [schedule, setSchedule] = useState([]);
   const [conflicts, setConflicts] = useState([]);
@@ -21,14 +19,12 @@ function App() {
   const [showSemesterManager, setShowSemesterManager] = useState(false);
   const [currentSemester, setCurrentSemester] = useState('2nd Sem 2024-2025');
 
-  // Days and time slots - editable
   const [days, setDays] = useState(['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']);
   const [timeSlots, setTimeSlots] = useState([
     '7:00', '8:00', '9:00', '10:00', '11:00', '12:00',
     '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'
   ]);
 
-  // Load from localStorage on startup
   useEffect(() => {
     const savedSubjects = localStorage.getItem('subjects');
     const savedSchedule = localStorage.getItem('schedule');
@@ -43,7 +39,6 @@ function App() {
     if (savedSemester) setCurrentSemester(savedSemester);
   }, []);
 
-  // Save to localStorage whenever data changes
   useEffect(() => {
     localStorage.setItem('subjects', JSON.stringify(subjects));
     localStorage.setItem('schedule', JSON.stringify(schedule));
@@ -52,7 +47,6 @@ function App() {
     localStorage.setItem('currentSemester', currentSemester);
   }, [subjects, schedule, days, timeSlots, currentSemester]);
 
-  // Check for conflicts when schedule changes
   useEffect(() => {
     const newConflicts = [];
     
@@ -81,7 +75,6 @@ function App() {
     setConflicts(newConflicts);
   }, [schedule]);
 
-  // Add new subject with optional schedule
   const addSubject = (newSubject) => {
     const subjectWithId = {
       ...newSubject,
@@ -91,16 +84,13 @@ function App() {
     
     setSubjects([...subjects, subjectWithId]);
     
-    // If schedule info was provided, add to schedule
     if (newSubject.day && newSubject.startTime && newSubject.endTime) {
-      // Validate time
       if (parseInt(newSubject.startTime) >= parseInt(newSubject.endTime)) {
         alert('❌ Invalid time range! Subject saved but not scheduled.');
         setShowAddSubject(false);
         return;
       }
 
-      // Check for conflicts
       const conflict = schedule.find(s => 
         s.day === newSubject.day && 
         ((parseInt(newSubject.startTime) < parseInt(s.endTime) && 
@@ -117,7 +107,6 @@ function App() {
         });
         setShowConflictModal(true);
       } else {
-        // No conflict, add to schedule
         const newScheduleItem = {
           id: Date.now() + 1,
           subjectId: subjectWithId.id,
@@ -133,18 +122,15 @@ function App() {
     setShowAddSubject(false);
   };
 
-  // Delete subject
   const deleteSubject = (subjectId) => {
     setSubjects(subjects.filter(s => s.id !== subjectId));
     setSchedule(schedule.filter(s => s.subjectId !== subjectId));
   };
 
-  // Edit subject
   const editSubject = (updatedSubject) => {
     setSubjects(subjects.map(s => 
       s.id === updatedSubject.id ? updatedSubject : s
     ));
-    // Update schedule entries for this subject
     setSchedule(schedule.map(s => 
       s.subjectId === updatedSubject.id 
         ? { ...s, ...updatedSubject, color: s.color } 
@@ -152,15 +138,12 @@ function App() {
     ));
   };
 
-  // Add to schedule manually
   const addToSchedule = (subject, day, startTime, endTime) => {
-    // Validate times
     if (parseInt(startTime) >= parseInt(endTime)) {
       alert('❌ End time must be after start time!');
       return false;
     }
 
-    // Check for conflict
     const conflict = schedule.find(s => 
       s.day === day && 
       ((parseInt(startTime) < parseInt(s.endTime) && 
@@ -192,12 +175,10 @@ function App() {
     return true;
   };
 
-  // Remove from schedule
   const removeFromSchedule = (id) => {
     setSchedule(schedule.filter(item => item.id !== id));
   };
 
-  // Force add despite conflict
   const forceAddDespiteConflict = () => {
     if (currentConflict) {
       const newScheduleItem = {
@@ -214,20 +195,17 @@ function App() {
     }
   };
 
-  // Get random color for subject
   const getRandomColor = () => {
     const colors = ['#ff4d4d', '#2e7dff', '#ffb443', '#00cc99', '#cc66ff', '#ff9933'];
     return colors[Math.floor(Math.random() * colors.length)];
   };
 
-  // Clear all schedule
   const clearSchedule = () => {
     if (window.confirm('Clear ALL schedule items?')) {
       setSchedule([]);
     }
   };
 
-  // Reset all data
   const resetAllData = () => {
     if (window.confirm('⚠️ Reset ALL data? This will delete everything!')) {
       setSubjects([]);
@@ -242,7 +220,6 @@ function App() {
 
   return (
     <div className="brutal-container">
-      {/* HEADER */}
       <header className="brutal-header">
         <div className="logo">
           <h1>USC<br />SCHEDULE<br />V3</h1>
@@ -264,8 +241,7 @@ function App() {
         </div>
       </header>
 
-      {/* ACTION BUTTONS */}
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+      <div className="action-buttons">
         <button className="action-btn" onClick={() => setShowAddSubject(true)}>
           ➕ ADD SUBJECT
         </button>
@@ -283,7 +259,6 @@ function App() {
         </button>
       </div>
 
-      {/* EXPORT BUTTONS */}
       <ExportButtons 
         schedule={schedule} 
         days={days} 
@@ -291,9 +266,7 @@ function App() {
         semester={currentSemester}
       />
 
-      {/* MAIN CONTENT */}
       <div className="main-content">
-        {/* SUBJECT LIST */}
         <SubjectList 
           subjects={subjects} 
           onAddToSchedule={addToSchedule}
@@ -301,7 +274,6 @@ function App() {
           onEditSubject={editSubject}
         />
 
-        {/* SCHEDULE GRID */}
         <ScheduleGrid 
           schedule={schedule}
           days={days}
@@ -311,7 +283,6 @@ function App() {
         />
       </div>
 
-      {/* FOOTER */}
       <footer className="brutal-footer">
         <div className="footer-links">
           <a href="#" onClick={(e) => { e.preventDefault(); setShowAddSubject(true); }}>ADD</a>
@@ -323,7 +294,6 @@ function App() {
         </div>
       </footer>
 
-      {/* MODALS */}
       {showConflictModal && (
         <ConflictModal 
           conflict={currentConflict}

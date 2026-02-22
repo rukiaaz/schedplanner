@@ -1,4 +1,3 @@
-// src/components/AddSubjectForm.js
 import React, { useState } from 'react';
 
 const AddSubjectForm = ({ onSave, onCancel, days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'] }) => {
@@ -26,7 +25,6 @@ const AddSubjectForm = ({ onSave, onCancel, days = ['MON', 'TUE', 'WED', 'THU', 
       return;
     }
 
-    // Validate time if both are selected
     if (subject.startTime && subject.endTime) {
       if (parseInt(subject.startTime) >= parseInt(subject.endTime)) {
         alert('❌ End time must be after start time!');
@@ -47,14 +45,12 @@ const AddSubjectForm = ({ onSave, onCancel, days = ['MON', 'TUE', 'WED', 'THU', 
       <div className="modal-content" style={{ maxWidth: '600px' }} onClick={(e) => e.stopPropagation()}>
         <h2>➕ ADD NEW SUBJECT</h2>
         <form onSubmit={handleSubmit}>
-          {/* Subject Code */}
           <div style={{ marginBottom: '1.5rem' }}>
             <label style={{ display: 'block', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
               Subject Code:
             </label>
             <input
               type="text"
-              name="code"
               value={subject.code}
               onChange={(e) => setSubject({...subject, code: e.target.value.toUpperCase()})}
               placeholder="e.g., IT 221"
@@ -70,14 +66,12 @@ const AddSubjectForm = ({ onSave, onCancel, days = ['MON', 'TUE', 'WED', 'THU', 
             />
           </div>
 
-          {/* Subject Name */}
           <div style={{ marginBottom: '1.5rem' }}>
             <label style={{ display: 'block', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
               Subject Name:
             </label>
             <input
               type="text"
-              name="name"
               value={subject.name}
               onChange={(e) => setSubject({...subject, name: e.target.value})}
               placeholder="e.g., Data Structures"
@@ -92,7 +86,6 @@ const AddSubjectForm = ({ onSave, onCancel, days = ['MON', 'TUE', 'WED', 'THU', 
             />
           </div>
 
-          {/* Units and Type */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
             <div>
               <label style={{ display: 'block', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
@@ -137,7 +130,6 @@ const AddSubjectForm = ({ onSave, onCancel, days = ['MON', 'TUE', 'WED', 'THU', 
             </div>
           </div>
 
-          {/* SCHEDULE SECTION */}
           <div style={{ 
             border: '4px solid black', 
             padding: '1.5rem', 
@@ -148,7 +140,6 @@ const AddSubjectForm = ({ onSave, onCancel, days = ['MON', 'TUE', 'WED', 'THU', 
               ⏰ SCHEDULE (Optional)
             </h3>
             
-            {/* Day Selector */}
             <div style={{ marginBottom: '1.5rem' }}>
               <label style={{ display: 'block', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
                 Day:
@@ -177,7 +168,6 @@ const AddSubjectForm = ({ onSave, onCancel, days = ['MON', 'TUE', 'WED', 'THU', 
               </div>
             </div>
 
-            {/* Time Pickers */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
@@ -223,7 +213,6 @@ const AddSubjectForm = ({ onSave, onCancel, days = ['MON', 'TUE', 'WED', 'THU', 
               </div>
             </div>
 
-            {/* Preview */}
             {subject.day && subject.startTime && subject.endTime && (
               <div style={{
                 marginTop: '1rem',
@@ -244,7 +233,6 @@ const AddSubjectForm = ({ onSave, onCancel, days = ['MON', 'TUE', 'WED', 'THU', 
             )}
           </div>
 
-          {/* Buttons */}
           <div className="modal-buttons">
             <button type="button" className="modal-btn" onClick={onCancel}>
               CANCEL
